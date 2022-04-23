@@ -1,0 +1,110 @@
+.overlay {
+  position: relative;
+  border: 1px solid grey;
+  margin: auto;
+  top:30px;
+  padding: 40px 40px;
+  display: block;
+  width: 800px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.87);
+}
+            .blockparent
+            {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .block
+            {
+              opacity:75%;
+              font-size:30px;
+              text-align:center;
+              display: inline-block;
+              
+              width:200px;
+              height:250px;
+              
+              
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+            .block1
+            {
+              opacity:75%;
+              font-size:20px;
+              display: inline-block;
+              
+              width:250px;
+              height:250px;
+              border-radius: 40px;
+              
+              
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+            .block2
+            {
+              font-size:17px;
+              text-align:center;
+              height:110px;
+              width:110px;
+              border-radius: 50%;
+              border: 0.5px solid rgb(128, 128, 128, 0.4);
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+body
+{
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size:20px;
+    color: black;
+}
+form {
+  /* This bit sets up the horizontal layout */
+  display:flex;
+  flex-direction:row;
+  
+  /* This bit draws the box around it */
+  border:1px solid grey;
+
+  /* I've used padding so you can see the edges of the elements. */
+  padding:2px;
+}
+
+input {
+  /* Tell the input to use all the available space */
+  flex-grow:2;
+  /* And hide the input's outline, so the form looks like the outline */
+  border:none;
+}
+input:focus {
+  /* removing the input focus blue box. Put this on the form if you like. */
+  outline: none;
+}
+li
+{
+    border: 1px solid transparent;
+}
+li:hover
+{
+    cursor: pointer;
+    transition: all 300ms ease-in-out;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: 1px solid grey;
+}
+.block2:hover
+{
+    transition: all 300ms ease-in-out;
+    background-color: rgba(255, 255, 255, 0.35);
+}
+video {
+  position: fixed;
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
