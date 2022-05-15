@@ -17,19 +17,20 @@
         </video>
         <div class="container overlay">
             <form>
-                <button style="background:transparent; border: transparent; font-size: 25px">🔎</button>
-                <input type="text" placeholder="Enter a city"></input>
+                <button style="background:transparent; border: transparent; font-size: 25px" id="search">🔎</button>
+                <input type="text" placeholder="Enter a city" autofocus = "on" autocomplete = "on" id="city"></input>
             </form>
             <h2 style="padding-top:20px;">Weather in Warsaw</h2>
             <hr style="border-top: 1px solid transparent;"></hr>
             <div class="row">
                 <div class="col order-1">
                     <div class="block">
-                        <p> <span style="background-color: rgba(255, 255, 255, 0.35); display:block; border: 1px solid rgb(128, 128, 128, 0.6);font-size:35px">
-                        14°C </br> 9°/ 22° </span>
+                        <p> <span style="background-color: rgba(255, 255, 255, 0.35); display:block; 
+                        border: 1px solid rgb(128, 128, 128, 0.6);font-size:35px; width: 200px;">
+                        <span id="con"></span><span class="units"><a href="#" id="cel">  °C </a>|<a href="#" id="far">°F</a></span></br> 9°/ 22° </span>
                         <span style="font-size: 20px;">
                         Rainy 
-                        </br>Saturday 23.04.22</span>
+                        </br><span id="date"></span></span>
                         </p>
                           
                     </div>

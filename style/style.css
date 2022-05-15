@@ -81,6 +81,11 @@ input {
   /* And hide the input's outline, so the form looks like the outline */
   border:none;
 }
+.units {
+    position: relative;
+    top: -20px;
+    font-size:20px;
+}
 input:focus {
   /* removing the input focus blue box. Put this on the form if you like. */
   outline: none;
@@ -95,6 +100,10 @@ li:hover
     transition: all 300ms ease-in-out;
     background-color: rgba(255, 255, 255, 0.7);
     border: 1px solid grey;
+}
+a:hover
+{
+    text-decoration:none;
 }
 .block2:hover
 {
