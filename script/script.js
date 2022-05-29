@@ -1,25 +1,4 @@
-let weather = {
-  paris: {
-    temp: 19.7,
-    humidity: 80
-  },
-  tokyo: {
-    temp: 17.3,
-    humidity: 50
-  },
-  lisbon: {
-    temp: 30.2,
-    humidity: 20
-  },
-  "san francisco": {
-    temp: 20.9,
-    humidity: 100
-  },
-  moscow: {
-    temp: -5,
-    humidity: 20
-  }
-};
+let apiKey = "2069d66bcab3a954960fd755429982a7";
 
 let week = [
     "Monday",
@@ -31,7 +10,6 @@ let week = [
     "Sunday"
 ]
 
-var flag = false;
 let now = new Date();
 
 function capF(string) {
@@ -43,43 +21,78 @@ function celfar(num) {
   return con;
 }
 
-function farcel(num) {
-  let con = num/(1.8)-32;
-  return con;
+function addZero(i) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  return i;
 }
 
+
 window.onload = function() {
-    let h2 = document.querySelector("h2");
+	let h2 = document.querySelector("h2");
     let date = document.querySelector("#date");
     let search = document.querySelector("#search");
-    date.innerHTML =` ${week[now.getDay()]} ${now.getHours()}:${now.getMinutes()}`
-    search.addEventListener("click", function(event){
-        event.preventDefault();
-        let city = document.querySelector("#city");
-        let choice = city.value.toLowerCase();
-         for (const key in weather) {
-            if (key === choice) {
-              flag = true;
-              h2.innerHTML =`Weather in ${capF(choice)}`;
-              break;
-            }
-          }
-          if (flag === false) 
-          {
-            alert(
-              `Sorry, we don't know the weather for this city, try going to https://www.google.com/search?q=weather+${choice}`);
-          }
-        });
+	date.innerHTML = ` ${week[now.getDay()]} ${addZero(now.getHours())}:${addZero(now.getMinutes())}`;
     let cel=document.querySelector("#cel");
     let far=document.querySelector("#far");
     let con=document.querySelector("#con");
+	let current = document.querySelector("#current");
     let cons = 14;
-    con.innerHTML=`${cons}`;
+	let humidity = document.querySelector("#humidity");
+	let wind = document.querySelector("#wind");
+	let description = document.querySelector("#description");
+	let desc_small = document.querySelector("#desc");
+	let menu = document.querySelector("#menu");
+    con.innerHTML=`${Math.round(cons)}`;
+	let temp_min = document.querySelector("#temp_min");
+	let temp_max = document.querySelector("#temp_max");
+	
+    
+	function locator(response)
+	{
+		console.log(response.data);
+		cons=response.data.main.temp;
+		con.innerHTML=`${Math.round(cons)}`;
+		h2.innerHTML = `Weather in ${response.data.name}`;
+			
+		humidity.addEventListener("click", function(event){
+			menu.innerHTML = `Humidity is ${response.data.main.humidity}%`;
+		});
+		wind.addEventListener("click", function(event){
+			menu.innerHTML = `Wind is ${Math.round(response.data.wind.speed)}m/s`;
+		});
+		description.addEventListener("click", function(event){
+			menu.innerHTML = `Description: ${response.data.weather[0].description}`;
+		});
+		desc_small.innerHTML = `${response.data.weather[0].main}`;
+		temp_max.innerHTML = `${Math.round(response.data.main.temp_max)}`;
+		temp_min.innerHTML = `${Math.round(response.data.main.temp_min)}`;
+	}
+	
+    search.addEventListener("click", function(event){
+        event.preventDefault();
+        let city = document.querySelector("#city").value;
+		var apiUrl1 = "https://api.openweathermap.org/data/2.5/weather?q=".concat(city, "&appid=").concat(apiKey, "&units=metric");
+		axios.get(apiUrl1).then(locator);
+	});
+
+	function currentPosition(position) {
+		let lat = position.coords.latitude;
+		let logt = position.coords.longitude;
+		let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${logt}&units=metric&appid=${apiKey}`;
+		//api things
+		axios.get(apiUrl).then(locator);
+	}
+	current.addEventListener("click", function(event){
+		event.preventDefault();
+		navigator.geolocation.getCurrentPosition(currentPosition);
+		});
     far.addEventListener("click",function(event){
-        con.innerHTML = `${celfar(cons)}`;
+		con.innerHTML = `${Math.round(celfar(cons))}`;
         });
     cel.addEventListener("click", function(event){
-        con.innerHTML = `${cons}`;
+        con.innerHTML = `${Math.round(cons)}`;
         });
 }
 

@@ -9,6 +9,7 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="style/style.css" />
         <script src="https://kit.fontawesome.com/e038967c5e.js" crossorigin="anonymous"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="script/script.js"></script>
     </head>
     <body>
@@ -18,8 +19,10 @@
         <div class="container overlay">
             <form>
                 <button style="background:transparent; border: transparent; font-size: 25px" id="search">🔎</button>
+				
                 <input type="text" placeholder="Enter a city" autofocus = "on" autocomplete = "on" id="city"></input>
-            </form>
+				<button style="background:transparent; border: transparent; font-size: 25px" id="current">📍</button>
+			</form>
             <h2 style="padding-top:20px;">Weather in Warsaw</h2>
             <hr style="border-top: 1px solid transparent;"></hr>
             <div class="row">
@@ -27,9 +30,11 @@
                     <div class="block">
                         <p> <span style="background-color: rgba(255, 255, 255, 0.35); display:block; 
                         border: 1px solid rgb(128, 128, 128, 0.6);font-size:35px; width: 200px;">
-                        <span id="con"></span><span class="units"><a href="#" id="cel">  °C </a>|<a href="#" id="far">°F</a></span></br> 9°/ 22° </span>
+                        <span id="con"></span><span class="units"><a href="#" id="cel">  °C </a>|<a href="#" id="far">°F</a></span></br>
+						<span id="temp_min">9</span>°/ <span id="temp_max">22</span>°</span>
                         <span style="font-size: 20px;">
-                        Rainy 
+						<span id="desc">
+                        Rainy </span>
                         </br><span id="date"></span></span>
                         </p>
                           
@@ -38,18 +43,15 @@
                 <div class="col order-2">
                     <div class="block1">
                         <ul>
-                            <li>Humidity</li>
-                            <li>Wind</li>
-                            <li>Real feel</li>
-                            <li>Pressure</li>
-                            <li>Chance of rain</li>
-                            <li>Air quality index</li>
+							<li id="description">Description</li>
+                            <li id="humidity">Humidity</li>
+                            <li id="wind">Wind</li>
                         </ul>
                     </div>
                 </div>
                 <div class="col order-3">
                     <div class="block" style="background-color: rgba(255, 255, 255, 0.35);border: 1px solid grey;">
-                        <p> Select from the menu </p>
+                        <p id="menu"> Select from the menu </p>
                     </div>
                 </div>
             </div>
