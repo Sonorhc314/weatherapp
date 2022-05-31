@@ -30,6 +30,7 @@ function addZero(i) {
 
 
 window.onload = function() {
+	
 	let h2 = document.querySelector("h2");
     let date = document.querySelector("#date");
     let search = document.querySelector("#search");
@@ -39,6 +40,8 @@ window.onload = function() {
     let con=document.querySelector("#con");
 	let current = document.querySelector("#current");
     let cons = 14;
+	let temp_maxV;
+	let temp_minV;
 	let humidity = document.querySelector("#humidity");
 	let wind = document.querySelector("#wind");
 	let description = document.querySelector("#description");
@@ -47,28 +50,43 @@ window.onload = function() {
     con.innerHTML=`${Math.round(cons)}`;
 	let temp_min = document.querySelector("#temp_min");
 	let temp_max = document.querySelector("#temp_max");
+	let pressure = document.querySelector("#pressure");
+	let feels_like = document.querySelector("#feels_like");
+	let icon = document.querySelector("#icon");
 	
     
 	function locator(response)
 	{
-		console.log(response.data);
+		//console.log(response.data);
 		cons=response.data.main.temp;
 		con.innerHTML=`${Math.round(cons)}`;
-		h2.innerHTML = `Weather in ${response.data.name}`;
+		h2.innerHTML = `Weather in ${response.data.name}, ${response.data.sys.country}`;
 			
 		humidity.addEventListener("click", function(event){
 			menu.innerHTML = `Humidity is ${response.data.main.humidity}%`;
 		});
 		wind.addEventListener("click", function(event){
-			menu.innerHTML = `Wind is ${Math.round(response.data.wind.speed)}m/s`;
+			menu.innerHTML = `Wind is ${Math.round(response.data.wind.speed)}km/h`;
 		});
 		description.addEventListener("click", function(event){
 			menu.innerHTML = `Description: ${response.data.weather[0].description}`;
 		});
 		desc_small.innerHTML = `${response.data.weather[0].main}`;
+		temp_maxV = Math.round(response.data.main.temp_max);
+		temp_minV = Math.round(response.data.main.temp_min);
 		temp_max.innerHTML = `${Math.round(response.data.main.temp_max)}`;
 		temp_min.innerHTML = `${Math.round(response.data.main.temp_min)}`;
+		icon.setAttribute("src", `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
+		pressure.addEventListener("click", function(event){
+			menu.innerHTML = `Pressure is ${Math.round(response.data.main.pressure)} mbar`;
+		});
+		feels_like.addEventListener("click", function(event){
+			menu.innerHTML = `Feels like ${response.data.main.feels_like}°C`;
+		});
 	}
+	
+	var apiUrl_def = "https://api.openweathermap.org/data/2.5/weather?q=Warsaw&appid=".concat(apiKey, "&units=metric");
+	axios.get(apiUrl_def).then(locator);
 	
     search.addEventListener("click", function(event){
         event.preventDefault();
@@ -90,9 +108,13 @@ window.onload = function() {
 		});
     far.addEventListener("click",function(event){
 		con.innerHTML = `${Math.round(celfar(cons))}`;
+		temp_max.innerHTML = `${Math.round(celfar(temp_maxV))}`;
+		temp_min.innerHTML = `${Math.round(celfar(temp_minV))}`;
         });
     cel.addEventListener("click", function(event){
         con.innerHTML = `${Math.round(cons)}`;
+		temp_max.innerHTML = `${Math.round(temp_maxV)}`;
+		temp_min.innerHTML = `${Math.round(temp_minV)}`;
         });
 }
 
