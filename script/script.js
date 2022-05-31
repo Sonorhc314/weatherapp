@@ -1,13 +1,13 @@
 let apiKey = "2069d66bcab3a954960fd755429982a7";
 
 let week = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday"
+    "Sun",
+	"Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri",
+    "Sat"
 ]
 
 let now = new Date();
@@ -54,7 +54,49 @@ window.onload = function() {
 	let feels_like = document.querySelector("#feels_like");
 	let icon = document.querySelector("#icon");
 	
-    
+	function formatDay(timestamp)
+	{
+		let date = new Date(timestamp*1000);
+		let day = date.getDay();
+
+		return week[day];
+	}
+	function displayForecast(response)
+	{
+		let forecast = response.data.daily;
+		let forecastEl=document.querySelector("#forecast");
+		let forecastHTML=`<div class="row">`;
+		forecast.forEach(function(forecastDay, index)
+		{
+			if(index<5)
+			{
+				forecastHTML=forecastHTML +"<div class=`col-2`>"+
+				`	<div class="block2" style="margin:16px">
+						<p> ${Math.round(forecastDay.temp.min)}°/${Math.round(forecastDay.temp.max)}°
+						</br>${formatDay(forecastDay.dt)}
+						<img
+						  src="http://openweathermap.org/img/wn/${
+							forecastDay.weather[0].icon
+						  }@2x.png"
+						  alt=""
+						  width="42"
+						/>
+						</p>
+					</div>
+				</div>
+				`;
+			}
+		});
+		forecastHTML = forecastHTML + `</div>`;
+		forecastEl.innerHTML = forecastHTML;
+	}
+	function getForecast(coordinates)
+	{
+		let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+		axios.get(apiUrl).then(displayForecast);
+	}
+	
+	
 	function locator(response)
 	{
 		//console.log(response.data);
@@ -83,6 +125,7 @@ window.onload = function() {
 		feels_like.addEventListener("click", function(event){
 			menu.innerHTML = `Feels like ${response.data.main.feels_like}°C`;
 		});
+		getForecast(response.data.coord);
 	}
 	
 	var apiUrl_def = "https://api.openweathermap.org/data/2.5/weather?q=Warsaw&appid=".concat(apiKey, "&units=metric");
@@ -116,5 +159,6 @@ window.onload = function() {
 		temp_max.innerHTML = `${Math.round(temp_maxV)}`;
 		temp_min.innerHTML = `${Math.round(temp_minV)}`;
         });
+	
 }
 
