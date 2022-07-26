@@ -59,7 +59,12 @@ window.onload = function() {
 		let date = new Date(timestamp*1000);
 		let day = date.getDay();
 
-		return week[day];
+		if(day>5)
+		{
+			day=-1;
+		}
+		
+		return week[day+1];
 	}
 	function displayForecast(response)
 	{
